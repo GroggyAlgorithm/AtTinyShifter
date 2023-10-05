@@ -1,0 +1,611 @@
+
+AtTinyShifter.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000342  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000004  00800060  00000342  000003d6  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000003  00800064  00800064  000003da  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000003da  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000040c  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000068  00000000  00000000  00000448  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000009d2  00000000  00000000  000004b0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000615  00000000  00000000  00000e82  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000587  00000000  00000000  00001497  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000124  00000000  00000000  00001a20  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000543  00000000  00000000  00001b44  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000005aa  00000000  00000000  00002087  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000070  00000000  00000000  00002631  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0e c0       	rjmp	.+28     	; 0x1e <__ctors_end>
+   2:	28 c0       	rjmp	.+80     	; 0x54 <__bad_interrupt>
+   4:	27 c0       	rjmp	.+78     	; 0x54 <__bad_interrupt>
+   6:	26 c0       	rjmp	.+76     	; 0x54 <__bad_interrupt>
+   8:	25 c0       	rjmp	.+74     	; 0x54 <__bad_interrupt>
+   a:	24 c0       	rjmp	.+72     	; 0x54 <__bad_interrupt>
+   c:	23 c0       	rjmp	.+70     	; 0x54 <__bad_interrupt>
+   e:	22 c0       	rjmp	.+68     	; 0x54 <__bad_interrupt>
+  10:	21 c0       	rjmp	.+66     	; 0x54 <__bad_interrupt>
+  12:	20 c0       	rjmp	.+64     	; 0x54 <__bad_interrupt>
+  14:	1f c0       	rjmp	.+62     	; 0x54 <__bad_interrupt>
+  16:	1e c0       	rjmp	.+60     	; 0x54 <__bad_interrupt>
+  18:	1d c0       	rjmp	.+58     	; 0x54 <__bad_interrupt>
+  1a:	1c c0       	rjmp	.+56     	; 0x54 <__bad_interrupt>
+  1c:	1b c0       	rjmp	.+54     	; 0x54 <__bad_interrupt>
+
+0000001e <__ctors_end>:
+  1e:	11 24       	eor	r1, r1
+  20:	1f be       	out	0x3f, r1	; 63
+  22:	cf e5       	ldi	r28, 0x5F	; 95
+  24:	d2 e0       	ldi	r29, 0x02	; 2
+  26:	de bf       	out	0x3e, r29	; 62
+  28:	cd bf       	out	0x3d, r28	; 61
+
+0000002a <__do_copy_data>:
+  2a:	10 e0       	ldi	r17, 0x00	; 0
+  2c:	a0 e6       	ldi	r26, 0x60	; 96
+  2e:	b0 e0       	ldi	r27, 0x00	; 0
+  30:	e2 e4       	ldi	r30, 0x42	; 66
+  32:	f3 e0       	ldi	r31, 0x03	; 3
+  34:	02 c0       	rjmp	.+4      	; 0x3a <__do_copy_data+0x10>
+  36:	05 90       	lpm	r0, Z+
+  38:	0d 92       	st	X+, r0
+  3a:	a4 36       	cpi	r26, 0x64	; 100
+  3c:	b1 07       	cpc	r27, r17
+  3e:	d9 f7       	brne	.-10     	; 0x36 <__do_copy_data+0xc>
+
+00000040 <__do_clear_bss>:
+  40:	20 e0       	ldi	r18, 0x00	; 0
+  42:	a4 e6       	ldi	r26, 0x64	; 100
+  44:	b0 e0       	ldi	r27, 0x00	; 0
+  46:	01 c0       	rjmp	.+2      	; 0x4a <.do_clear_bss_start>
+
+00000048 <.do_clear_bss_loop>:
+  48:	1d 92       	st	X+, r1
+
+0000004a <.do_clear_bss_start>:
+  4a:	a7 36       	cpi	r26, 0x67	; 103
+  4c:	b2 07       	cpc	r27, r18
+  4e:	e1 f7       	brne	.-8      	; 0x48 <.do_clear_bss_loop>
+  50:	5f d1       	rcall	.+702    	; 0x310 <main>
+  52:	75 c1       	rjmp	.+746    	; 0x33e <_exit>
+
+00000054 <__bad_interrupt>:
+  54:	d5 cf       	rjmp	.-86     	; 0x0 <__vectors>
+
+00000056 <_Z8AdcSetuphb>:
+		ShiftOut(currentOutput,&SHIFT_REG_OUT_REG, SHIFT_REG_DATA, &SHIFT_REG_OUT_REG, SHIFT_REG_CLK,false);
+		
+		//Disable our latch
+		SHIFT_REG_OUT_REG |= (1 << SHIFT_REG_LATCH);
+	}
+}
+  56:	28 b3       	in	r18, 0x18	; 24
+  58:	98 2f       	mov	r25, r24
+  5a:	90 95       	com	r25
+  5c:	29 23       	and	r18, r25
+  5e:	28 bb       	out	0x18, r18	; 24
+  60:	27 b3       	in	r18, 0x17	; 23
+  62:	92 23       	and	r25, r18
+  64:	97 bb       	out	0x17, r25	; 23
+  66:	66 23       	and	r22, r22
+  68:	19 f0       	breq	.+6      	; 0x70 <_Z8AdcSetuphb+0x1a>
+  6a:	94 b3       	in	r25, 0x14	; 20
+  6c:	89 2b       	or	r24, r25
+  6e:	84 bb       	out	0x14, r24	; 20
+  70:	80 e8       	ldi	r24, 0x80	; 128
+  72:	87 b9       	out	0x07, r24	; 7
+  74:	83 b1       	in	r24, 0x03	; 3
+  76:	88 7f       	andi	r24, 0xF8	; 248
+  78:	83 b9       	out	0x03, r24	; 3
+  7a:	86 b1       	in	r24, 0x06	; 6
+  7c:	80 68       	ori	r24, 0x80	; 128
+  7e:	86 b9       	out	0x06, r24	; 6
+  80:	08 95       	ret
+
+00000082 <_Z10SystemInitv>:
+  82:	18 ba       	out	0x18, r1	; 24
+  84:	8f ef       	ldi	r24, 0xFF	; 255
+  86:	87 bb       	out	0x17, r24	; 23
+  88:	61 e0       	ldi	r22, 0x01	; 1
+  8a:	84 e0       	ldi	r24, 0x04	; 4
+  8c:	e4 df       	rcall	.-56     	; 0x56 <_Z8AdcSetuphb>
+  8e:	08 95       	ret
+
+00000090 <_Z8ShiftOuthPVhhS0_hb>:
+  90:	ef 92       	push	r14
+  92:	0f 93       	push	r16
+  94:	db 01       	movw	r26, r22
+  96:	f9 01       	movw	r30, r18
+  98:	ee 20       	and	r14, r14
+  9a:	c1 f1       	breq	.+112    	; 0x10c <_Z8ShiftOuthPVhhS0_hb+0x7c>
+  9c:	90 e0       	ldi	r25, 0x00	; 0
+  9e:	98 30       	cpi	r25, 0x08	; 8
+  a0:	08 f0       	brcs	.+2      	; 0xa4 <_Z8ShiftOuthPVhhS0_hb+0x14>
+  a2:	6e c0       	rjmp	.+220    	; 0x180 <_Z8ShiftOuthPVhhS0_hb+0xf0>
+  a4:	28 2f       	mov	r18, r24
+  a6:	30 e0       	ldi	r19, 0x00	; 0
+  a8:	09 2e       	mov	r0, r25
+  aa:	02 c0       	rjmp	.+4      	; 0xb0 <_Z8ShiftOuthPVhhS0_hb+0x20>
+  ac:	35 95       	asr	r19
+  ae:	27 95       	ror	r18
+  b0:	0a 94       	dec	r0
+  b2:	e2 f7       	brpl	.-8      	; 0xac <_Z8ShiftOuthPVhhS0_hb+0x1c>
+  b4:	20 ff       	sbrs	r18, 0
+  b6:	0c c0       	rjmp	.+24     	; 0xd0 <_Z8ShiftOuthPVhhS0_hb+0x40>
+  b8:	5c 91       	ld	r21, X
+  ba:	21 e0       	ldi	r18, 0x01	; 1
+  bc:	30 e0       	ldi	r19, 0x00	; 0
+  be:	04 2e       	mov	r0, r20
+  c0:	02 c0       	rjmp	.+4      	; 0xc6 <_Z8ShiftOuthPVhhS0_hb+0x36>
+  c2:	22 0f       	add	r18, r18
+  c4:	33 1f       	adc	r19, r19
+  c6:	0a 94       	dec	r0
+  c8:	e2 f7       	brpl	.-8      	; 0xc2 <_Z8ShiftOuthPVhhS0_hb+0x32>
+  ca:	25 2b       	or	r18, r21
+  cc:	2c 93       	st	X, r18
+  ce:	0c c0       	rjmp	.+24     	; 0xe8 <_Z8ShiftOuthPVhhS0_hb+0x58>
+  d0:	5c 91       	ld	r21, X
+  d2:	21 e0       	ldi	r18, 0x01	; 1
+  d4:	30 e0       	ldi	r19, 0x00	; 0
+  d6:	04 2e       	mov	r0, r20
+  d8:	02 c0       	rjmp	.+4      	; 0xde <_Z8ShiftOuthPVhhS0_hb+0x4e>
+  da:	22 0f       	add	r18, r18
+  dc:	33 1f       	adc	r19, r19
+  de:	0a 94       	dec	r0
+  e0:	e2 f7       	brpl	.-8      	; 0xda <_Z8ShiftOuthPVhhS0_hb+0x4a>
+  e2:	20 95       	com	r18
+  e4:	25 23       	and	r18, r21
+  e6:	2c 93       	st	X, r18
+  e8:	50 81       	ld	r21, Z
+  ea:	21 e0       	ldi	r18, 0x01	; 1
+  ec:	30 e0       	ldi	r19, 0x00	; 0
+  ee:	00 2e       	mov	r0, r16
+  f0:	02 c0       	rjmp	.+4      	; 0xf6 <_Z8ShiftOuthPVhhS0_hb+0x66>
+  f2:	22 0f       	add	r18, r18
+  f4:	33 1f       	adc	r19, r19
+  f6:	0a 94       	dec	r0
+  f8:	e2 f7       	brpl	.-8      	; 0xf2 <_Z8ShiftOuthPVhhS0_hb+0x62>
+  fa:	35 2f       	mov	r19, r21
+  fc:	32 2b       	or	r19, r18
+  fe:	30 83       	st	Z, r19
+ 100:	30 81       	ld	r19, Z
+ 102:	20 95       	com	r18
+ 104:	23 23       	and	r18, r19
+ 106:	20 83       	st	Z, r18
+ 108:	9f 5f       	subi	r25, 0xFF	; 255
+ 10a:	c9 cf       	rjmp	.-110    	; 0x9e <_Z8ShiftOuthPVhhS0_hb+0xe>
+ 10c:	90 e0       	ldi	r25, 0x00	; 0
+ 10e:	98 30       	cpi	r25, 0x08	; 8
+ 110:	b8 f5       	brcc	.+110    	; 0x180 <_Z8ShiftOuthPVhhS0_hb+0xf0>
+ 112:	67 e0       	ldi	r22, 0x07	; 7
+ 114:	70 e0       	ldi	r23, 0x00	; 0
+ 116:	69 1b       	sub	r22, r25
+ 118:	71 09       	sbc	r23, r1
+ 11a:	28 2f       	mov	r18, r24
+ 11c:	30 e0       	ldi	r19, 0x00	; 0
+ 11e:	02 c0       	rjmp	.+4      	; 0x124 <_Z8ShiftOuthPVhhS0_hb+0x94>
+ 120:	35 95       	asr	r19
+ 122:	27 95       	ror	r18
+ 124:	6a 95       	dec	r22
+ 126:	e2 f7       	brpl	.-8      	; 0x120 <_Z8ShiftOuthPVhhS0_hb+0x90>
+ 128:	20 ff       	sbrs	r18, 0
+ 12a:	0c c0       	rjmp	.+24     	; 0x144 <_Z8ShiftOuthPVhhS0_hb+0xb4>
+ 12c:	5c 91       	ld	r21, X
+ 12e:	21 e0       	ldi	r18, 0x01	; 1
+ 130:	30 e0       	ldi	r19, 0x00	; 0
+ 132:	04 2e       	mov	r0, r20
+ 134:	02 c0       	rjmp	.+4      	; 0x13a <_Z8ShiftOuthPVhhS0_hb+0xaa>
+ 136:	22 0f       	add	r18, r18
+ 138:	33 1f       	adc	r19, r19
+ 13a:	0a 94       	dec	r0
+ 13c:	e2 f7       	brpl	.-8      	; 0x136 <_Z8ShiftOuthPVhhS0_hb+0xa6>
+ 13e:	25 2b       	or	r18, r21
+ 140:	2c 93       	st	X, r18
+ 142:	0c c0       	rjmp	.+24     	; 0x15c <_Z8ShiftOuthPVhhS0_hb+0xcc>
+ 144:	5c 91       	ld	r21, X
+ 146:	21 e0       	ldi	r18, 0x01	; 1
+ 148:	30 e0       	ldi	r19, 0x00	; 0
+ 14a:	04 2e       	mov	r0, r20
+ 14c:	02 c0       	rjmp	.+4      	; 0x152 <_Z8ShiftOuthPVhhS0_hb+0xc2>
+ 14e:	22 0f       	add	r18, r18
+ 150:	33 1f       	adc	r19, r19
+ 152:	0a 94       	dec	r0
+ 154:	e2 f7       	brpl	.-8      	; 0x14e <_Z8ShiftOuthPVhhS0_hb+0xbe>
+ 156:	20 95       	com	r18
+ 158:	25 23       	and	r18, r21
+ 15a:	2c 93       	st	X, r18
+ 15c:	50 81       	ld	r21, Z
+ 15e:	21 e0       	ldi	r18, 0x01	; 1
+ 160:	30 e0       	ldi	r19, 0x00	; 0
+ 162:	00 2e       	mov	r0, r16
+ 164:	02 c0       	rjmp	.+4      	; 0x16a <_Z8ShiftOuthPVhhS0_hb+0xda>
+ 166:	22 0f       	add	r18, r18
+ 168:	33 1f       	adc	r19, r19
+ 16a:	0a 94       	dec	r0
+ 16c:	e2 f7       	brpl	.-8      	; 0x166 <_Z8ShiftOuthPVhhS0_hb+0xd6>
+ 16e:	35 2f       	mov	r19, r21
+ 170:	32 2b       	or	r19, r18
+ 172:	30 83       	st	Z, r19
+ 174:	30 81       	ld	r19, Z
+ 176:	20 95       	com	r18
+ 178:	23 23       	and	r18, r19
+ 17a:	20 83       	st	Z, r18
+ 17c:	9f 5f       	subi	r25, 0xFF	; 255
+ 17e:	c7 cf       	rjmp	.-114    	; 0x10e <_Z8ShiftOuthPVhhS0_hb+0x7e>
+ 180:	0f 91       	pop	r16
+ 182:	ef 90       	pop	r14
+ 184:	08 95       	ret
+
+00000186 <_Z9SampleAdchh>:
+ 186:	38 2f       	mov	r19, r24
+ 188:	66 23       	and	r22, r22
+ 18a:	d9 f0       	breq	.+54     	; 0x1c2 <_Z9SampleAdchh+0x3c>
+ 18c:	87 b1       	in	r24, 0x07	; 7
+ 18e:	83 2b       	or	r24, r19
+ 190:	87 b9       	out	0x07, r24	; 7
+ 192:	20 e0       	ldi	r18, 0x00	; 0
+ 194:	40 e0       	ldi	r20, 0x00	; 0
+ 196:	50 e0       	ldi	r21, 0x00	; 0
+ 198:	26 17       	cp	r18, r22
+ 19a:	58 f4       	brcc	.+22     	; 0x1b2 <_Z9SampleAdchh+0x2c>
+ 19c:	2f 5f       	subi	r18, 0xFF	; 255
+ 19e:	96 b1       	in	r25, 0x06	; 6
+ 1a0:	90 64       	ori	r25, 0x40	; 64
+ 1a2:	96 b9       	out	0x06, r25	; 6
+ 1a4:	36 99       	sbic	0x06, 6	; 6
+ 1a6:	fe cf       	rjmp	.-4      	; 0x1a4 <_Z9SampleAdchh+0x1e>
+ 1a8:	84 b1       	in	r24, 0x04	; 4
+ 1aa:	95 b1       	in	r25, 0x05	; 5
+ 1ac:	48 0f       	add	r20, r24
+ 1ae:	59 1f       	adc	r21, r25
+ 1b0:	f3 cf       	rjmp	.-26     	; 0x198 <_Z9SampleAdchh+0x12>
+ 1b2:	70 e0       	ldi	r23, 0x00	; 0
+ 1b4:	ca 01       	movw	r24, r20
+ 1b6:	af d0       	rcall	.+350    	; 0x316 <__udivmodhi4>
+ 1b8:	97 b1       	in	r25, 0x07	; 7
+ 1ba:	30 95       	com	r19
+ 1bc:	39 23       	and	r19, r25
+ 1be:	37 b9       	out	0x07, r19	; 7
+ 1c0:	02 c0       	rjmp	.+4      	; 0x1c6 <_Z9SampleAdchh+0x40>
+ 1c2:	60 e0       	ldi	r22, 0x00	; 0
+ 1c4:	70 e0       	ldi	r23, 0x00	; 0
+ 1c6:	cb 01       	movw	r24, r22
+ 1c8:	08 95       	ret
+
+000001ca <_Z19SampleByteOverMicrojjb>:
+* \param microDelayPerReading The amount counts with a us delay of 1 to read a bit for
+* \param msbFirst most significant bit first? yes or no?
+* \return The sampled byte
+*/
+unsigned char SampleByteOverMicro(uint16_t adcForActive, uint16_t microDelayPerReading, bool msbFirst)
+{
+ 1ca:	bf 92       	push	r11
+ 1cc:	cf 92       	push	r12
+ 1ce:	df 92       	push	r13
+ 1d0:	ef 92       	push	r14
+ 1d2:	ff 92       	push	r15
+ 1d4:	0f 93       	push	r16
+ 1d6:	1f 93       	push	r17
+ 1d8:	cf 93       	push	r28
+ 1da:	df 93       	push	r29
+ 1dc:	8c 01       	movw	r16, r24
+ 1de:	eb 01       	movw	r28, r22
+ 1e0:	b4 2e       	mov	r11, r20
+	//Variables
+	uint8_t outVal = 0; //The final value read
+	int8_t index = 7; //The bit index
+ 1e2:	0f 2e       	mov	r0, r31
+ 1e4:	f7 e0       	ldi	r31, 0x07	; 7
+ 1e6:	cf 2e       	mov	r12, r31
+ 1e8:	f0 2d       	mov	r31, r0
+* \return The sampled byte
+*/
+unsigned char SampleByteOverMicro(uint16_t adcForActive, uint16_t microDelayPerReading, bool msbFirst)
+{
+	//Variables
+	uint8_t outVal = 0; //The final value read
+ 1ea:	d1 2c       	mov	r13, r1
+	//Do this...
+	do
+	{
+		
+		//Loop through the passed counts
+		for(uint16_t j = 0; j < microDelayPerReading; j++)
+ 1ec:	e1 2c       	mov	r14, r1
+ 1ee:	f1 2c       	mov	r15, r1
+ 1f0:	ec 16       	cp	r14, r28
+ 1f2:	fd 06       	cpc	r15, r29
+ 1f4:	e8 f5       	brcc	.+122    	; 0x270 <__stack+0x11>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1f6:	00 00       	nop
+		{
+			//Delay
+			_delay_us(1);
+			
+			//Read the adc
+			adcReading = SampleAdc(ADC_A, ADC_SAMPLES);
+ 1f8:	6a e0       	ldi	r22, 0x0A	; 10
+ 1fa:	81 e0       	ldi	r24, 0x01	; 1
+ 1fc:	c4 df       	rcall	.-120    	; 0x186 <_Z9SampleAdchh>
+			
+			//Set our saved lowest adc value received
+			adcLowest = (adcReading < adcLowest) ? adcReading : adcLowest;
+ 1fe:	20 91 62 00 	lds	r18, 0x0062	; 0x800062 <_ZL9adcLowest>
+ 202:	30 91 63 00 	lds	r19, 0x0063	; 0x800063 <_ZL9adcLowest+0x1>
+ 206:	82 17       	cp	r24, r18
+ 208:	93 07       	cpc	r25, r19
+ 20a:	08 f4       	brcc	.+2      	; 0x20e <__DATA_REGION_LENGTH__+0xe>
+ 20c:	9c 01       	movw	r18, r24
+ 20e:	30 93 63 00 	sts	0x0063, r19	; 0x800063 <_ZL9adcLowest+0x1>
+ 212:	20 93 62 00 	sts	0x0062, r18	; 0x800062 <_ZL9adcLowest>
+			
+			//Set our saved highest adc value received
+			adcHighest = (adcReading > adcHighest) ? adcReading : adcHighest;
+ 216:	20 91 60 00 	lds	r18, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 21a:	30 91 61 00 	lds	r19, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 21e:	28 17       	cp	r18, r24
+ 220:	39 07       	cpc	r19, r25
+ 222:	08 f4       	brcc	.+2      	; 0x226 <__DATA_REGION_LENGTH__+0x26>
+ 224:	9c 01       	movw	r18, r24
+ 226:	30 93 61 00 	sts	0x0061, r19	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 22a:	20 93 60 00 	sts	0x0060, r18	; 0x800060 <__DATA_REGION_ORIGIN__>
+			
+			//If the reading is greater than the passed active value...
+			if(adcReading >= adcForActive)
+ 22e:	80 17       	cp	r24, r16
+ 230:	91 07       	cpc	r25, r17
+ 232:	d0 f0       	brcs	.+52     	; 0x268 <__stack+0x9>
+			{
+				//If msb first...
+				if(msbFirst)
+ 234:	bb 20       	and	r11, r11
+ 236:	51 f0       	breq	.+20     	; 0x24c <__DATA_REGION_LENGTH__+0x4c>
+				{
+					//Set the MSB bit
+					outVal |= (1 << index);
+ 238:	81 e0       	ldi	r24, 0x01	; 1
+ 23a:	90 e0       	ldi	r25, 0x00	; 0
+ 23c:	0c 2c       	mov	r0, r12
+ 23e:	02 c0       	rjmp	.+4      	; 0x244 <__DATA_REGION_LENGTH__+0x44>
+ 240:	88 0f       	add	r24, r24
+ 242:	99 1f       	adc	r25, r25
+ 244:	0a 94       	dec	r0
+ 246:	e2 f7       	brpl	.-8      	; 0x240 <__DATA_REGION_LENGTH__+0x40>
+ 248:	d8 2a       	or	r13, r24
+ 24a:	0e c0       	rjmp	.+28     	; 0x268 <__stack+0x9>
+				}
+				//else...
+				else
+				{
+					//Set the LSB bit
+					outVal |= (1 << (7 - index));
+ 24c:	27 e0       	ldi	r18, 0x07	; 7
+ 24e:	30 e0       	ldi	r19, 0x00	; 0
+ 250:	2c 19       	sub	r18, r12
+ 252:	31 09       	sbc	r19, r1
+ 254:	c7 fc       	sbrc	r12, 7
+ 256:	33 95       	inc	r19
+ 258:	81 e0       	ldi	r24, 0x01	; 1
+ 25a:	90 e0       	ldi	r25, 0x00	; 0
+ 25c:	02 c0       	rjmp	.+4      	; 0x262 <__stack+0x3>
+ 25e:	88 0f       	add	r24, r24
+ 260:	99 1f       	adc	r25, r25
+ 262:	2a 95       	dec	r18
+ 264:	e2 f7       	brpl	.-8      	; 0x25e <__DATA_REGION_LENGTH__+0x5e>
+ 266:	d8 2a       	or	r13, r24
+	//Do this...
+	do
+	{
+		
+		//Loop through the passed counts
+		for(uint16_t j = 0; j < microDelayPerReading; j++)
+ 268:	8f ef       	ldi	r24, 0xFF	; 255
+ 26a:	e8 1a       	sub	r14, r24
+ 26c:	f8 0a       	sbc	r15, r24
+ 26e:	c0 cf       	rjmp	.-128    	; 0x1f0 <_Z19SampleByteOverMicrojjb+0x26>
+			}
+		}
+		
+	}
+	//While our index is greater than or equal to 0
+	while (--index >= 0);
+ 270:	ca 94       	dec	r12
+	uint8_t outVal = 0; //The final value read
+	int8_t index = 7; //The bit index
+	uint16_t adcReading = 0; //The currently active reading
+	
+	//Do this...
+	do
+ 272:	cc 20       	and	r12, r12
+ 274:	0c f0       	brlt	.+2      	; 0x278 <__stack+0x19>
+ 276:	ba cf       	rjmp	.-140    	; 0x1ec <_Z19SampleByteOverMicrojjb+0x22>
+	}
+	//While our index is greater than or equal to 0
+	while (--index >= 0);
+	
+	//If our highest adc is greater than our lowest...
+	if(adcHighest > adcLowest)
+ 278:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 27c:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 280:	20 91 62 00 	lds	r18, 0x0062	; 0x800062 <_ZL9adcLowest>
+ 284:	30 91 63 00 	lds	r19, 0x0063	; 0x800063 <_ZL9adcLowest+0x1>
+ 288:	28 17       	cp	r18, r24
+ 28a:	39 07       	cpc	r19, r25
+ 28c:	40 f4       	brcc	.+16     	; 0x29e <__stack+0x3f>
+	{
+		//Set our cutout to the mid point
+		adcCutout = ((adcHighest - adcLowest) / 2);
+ 28e:	82 1b       	sub	r24, r18
+ 290:	93 0b       	sbc	r25, r19
+ 292:	96 95       	lsr	r25
+ 294:	87 95       	ror	r24
+ 296:	90 93 66 00 	sts	0x0066, r25	; 0x800066 <_ZL9adcCutout+0x1>
+ 29a:	80 93 65 00 	sts	0x0065, r24	; 0x800065 <_ZL9adcCutout>
+	}
+	
+	//Return our out value
+	return outVal;
+}
+ 29e:	8d 2d       	mov	r24, r13
+ 2a0:	df 91       	pop	r29
+ 2a2:	cf 91       	pop	r28
+ 2a4:	1f 91       	pop	r17
+ 2a6:	0f 91       	pop	r16
+ 2a8:	ff 90       	pop	r15
+ 2aa:	ef 90       	pop	r14
+ 2ac:	df 90       	pop	r13
+ 2ae:	cf 90       	pop	r12
+ 2b0:	bf 90       	pop	r11
+ 2b2:	08 95       	ret
+
+000002b4 <_Z14AdcToByteShiftv>:
+/**
+* \brief Shifts out an entire byte from sampling over x counts
+*
+*/
+void AdcToByteShift()
+{
+ 2b4:	ef 92       	push	r14
+ 2b6:	0f 93       	push	r16
+	//Variables
+	uint8_t canStart = 0; //If we can shift
+	static uint8_t currentOutput; //Our current output value
+	
+	//Set our read pin to read
+	PORTB |= (1 << SELECT_PIN);
+ 2b8:	88 b3       	in	r24, 0x18	; 24
+ 2ba:	82 60       	ori	r24, 0x02	; 2
+ 2bc:	88 bb       	out	0x18, r24	; 24
+	DDRB &= ~(1 << SELECT_PIN);
+ 2be:	87 b3       	in	r24, 0x17	; 23
+ 2c0:	8d 7f       	andi	r24, 0xFD	; 253
+ 2c2:	87 bb       	out	0x17, r24	; 23
+	
+	//Read the pin
+	canStart = !(PINB & (1 << SELECT_PIN));
+ 2c4:	96 b3       	in	r25, 0x16	; 22
+	
+	//Reset the pin back to output low
+	DDRB |= (1 << SELECT_PIN);
+ 2c6:	87 b3       	in	r24, 0x17	; 23
+ 2c8:	82 60       	ori	r24, 0x02	; 2
+ 2ca:	87 bb       	out	0x17, r24	; 23
+	PORTB &= ~(1 << SELECT_PIN);
+ 2cc:	88 b3       	in	r24, 0x18	; 24
+ 2ce:	8d 7f       	andi	r24, 0xFD	; 253
+ 2d0:	88 bb       	out	0x18, r24	; 24
+	
+	//If we can being sampling...
+	if(canStart)
+ 2d2:	91 fd       	sbrc	r25, 1
+ 2d4:	1a c0       	rjmp	.+52     	; 0x30a <_Z14AdcToByteShiftv+0x56>
+	{
+		//Get our current output byte
+		currentOutput = SampleByteOverMicro(adcCutout,10, true);
+ 2d6:	41 e0       	ldi	r20, 0x01	; 1
+ 2d8:	6a e0       	ldi	r22, 0x0A	; 10
+ 2da:	70 e0       	ldi	r23, 0x00	; 0
+ 2dc:	80 91 65 00 	lds	r24, 0x0065	; 0x800065 <_ZL9adcCutout>
+ 2e0:	90 91 66 00 	lds	r25, 0x0066	; 0x800066 <_ZL9adcCutout+0x1>
+ 2e4:	72 df       	rcall	.-284    	; 0x1ca <_Z19SampleByteOverMicrojjb>
+ 2e6:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__data_end>
+		
+		//Ground our latch
+		SHIFT_REG_OUT_REG &= ~(1 << SHIFT_REG_LATCH);
+ 2ea:	88 b3       	in	r24, 0x18	; 24
+ 2ec:	87 7f       	andi	r24, 0xF7	; 247
+ 2ee:	88 bb       	out	0x18, r24	; 24
+		
+		//Shift out the value
+		ShiftOut(currentOutput,&SHIFT_REG_OUT_REG, SHIFT_REG_DATA, &SHIFT_REG_OUT_REG, SHIFT_REG_CLK,false);
+ 2f0:	e1 2c       	mov	r14, r1
+ 2f2:	04 e0       	ldi	r16, 0x04	; 4
+ 2f4:	28 e3       	ldi	r18, 0x38	; 56
+ 2f6:	30 e0       	ldi	r19, 0x00	; 0
+ 2f8:	40 e0       	ldi	r20, 0x00	; 0
+ 2fa:	68 e3       	ldi	r22, 0x38	; 56
+ 2fc:	70 e0       	ldi	r23, 0x00	; 0
+ 2fe:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__data_end>
+ 302:	c6 de       	rcall	.-628    	; 0x90 <_Z8ShiftOuthPVhhS0_hb>
+		
+		//Disable our latch
+		SHIFT_REG_OUT_REG |= (1 << SHIFT_REG_LATCH);
+ 304:	88 b3       	in	r24, 0x18	; 24
+ 306:	88 60       	ori	r24, 0x08	; 8
+ 308:	88 bb       	out	0x18, r24	; 24
+	}
+}
+ 30a:	0f 91       	pop	r16
+ 30c:	ef 90       	pop	r14
+ 30e:	08 95       	ret
+
+00000310 <main>:
+*
+*/
+int main(void)
+{
+	//Initialize the system
+	SystemInit();
+ 310:	b8 de       	rcall	.-656    	; 0x82 <_Z10SystemInitv>
+	
+	//Enter program loop...
+	while (1)
+	{
+		//Run the current modes function
+		AdcToByteShift();
+ 312:	d0 df       	rcall	.-96     	; 0x2b4 <_Z14AdcToByteShiftv>
+ 314:	fe cf       	rjmp	.-4      	; 0x312 <main+0x2>
+
+00000316 <__udivmodhi4>:
+ 316:	aa 1b       	sub	r26, r26
+ 318:	bb 1b       	sub	r27, r27
+ 31a:	51 e1       	ldi	r21, 0x11	; 17
+ 31c:	07 c0       	rjmp	.+14     	; 0x32c <__udivmodhi4_ep>
+
+0000031e <__udivmodhi4_loop>:
+ 31e:	aa 1f       	adc	r26, r26
+ 320:	bb 1f       	adc	r27, r27
+ 322:	a6 17       	cp	r26, r22
+ 324:	b7 07       	cpc	r27, r23
+ 326:	10 f0       	brcs	.+4      	; 0x32c <__udivmodhi4_ep>
+ 328:	a6 1b       	sub	r26, r22
+ 32a:	b7 0b       	sbc	r27, r23
+
+0000032c <__udivmodhi4_ep>:
+ 32c:	88 1f       	adc	r24, r24
+ 32e:	99 1f       	adc	r25, r25
+ 330:	5a 95       	dec	r21
+ 332:	a9 f7       	brne	.-22     	; 0x31e <__udivmodhi4_loop>
+ 334:	80 95       	com	r24
+ 336:	90 95       	com	r25
+ 338:	bc 01       	movw	r22, r24
+ 33a:	cd 01       	movw	r24, r26
+ 33c:	08 95       	ret
+
+0000033e <_exit>:
+ 33e:	f8 94       	cli
+
+00000340 <__stop_program>:
+ 340:	ff cf       	rjmp	.-2      	; 0x340 <__stop_program>
